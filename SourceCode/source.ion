@@ -1,0 +1,114 @@
+#include<SoftwareSerial.h>
+SoftwareSerial Arduino_SoftSerial (10,11); //rx tx
+#include <NewPing.h>
+#include <Servo.h>
+Servo myservo;
+int position = 0;
+ int servoPin = 1;
+ #define irPin 4
+#define sensorPin A0
+int sensorValue;
+#define TRIGGER_PIN1  5 
+#define ECHO_PIN1     6 
+#define TRIGGER_PIN2  7
+#define ECHO_PIN2     8
+#define MAX_DISTANCE 10 // Maximum distance we want to measure (in centimeters).
+
+float data1, data2, data3, data4;
+float data5, data6, data7, data8;
+String data9, data10, data11, data12;
+
+
+NewPing sonar1(TRIGGER_PIN1, ECHO_PIN1, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
+NewPing sonar2(TRIGGER_PIN2, ECHO_PIN2, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
+void setup() 
+{
+  Serial.begin(57600);
+  myservo.attach(servoPin);
+  pinMode(irPin, INPUT);
+  digitalWrite(irPin,HIGH);
+
+  //Open serial communication (Arduino - PC) 
+
+  Serial.begin(57600);
+   Serial.begin(57600); 
+   Serial.begin(57600);
+   Serial.begin(57600); 
+   pinMode(13, OUTPUT);
+  //Open Serial cimmunication (Arduino - Arduino) 
+  
+  Arduino_SoftSerial.begin(9600);
+   // sensors.begin();
+}
+
+void loop() {
+  // Wait 50ms between pings (about 20 pings/sec). 29ms should be the shortest delay between pings.
+  int distance1 = sonar1.ping_cm(); // Send ping, get distance in cm and print result (0 = outside set distance range)
+  Serial.print("Distance1: ");
+  Serial.print(distance1);
+  Serial.println("cm");
+  
+    int distance2 = sonar2.ping_cm(); // Send ping, get distance in cm and print result (0 = outside set distance range)
+  Serial.print("Distance2: ");
+  Serial.print(distance2);
+  Serial.println("cm");
+ 
+  sensorValue=analogRead(sensorPin);
+  Serial.println("Analog Value: ");
+  Serial.println(sensorValue);
+   delay(1000);
+  if(digitalRead(irPin)==LOW)
+   
+ {
+
+ 
+ if(sensorValue < 700)
+ {
+ myservo.write(180);
+ delay(1000);
+ myservo.write(90);
+ delay(1000);
+ }
+ else
+{
+  myservo.write(15);
+ delay(1000);
+ myservo.write(90);
+ delay(1000);
+}
+ 
+ } 
+
+data1 =distance1;
+data2 =distance2;
+data3 = sensorValue;
+data4 = 0;
+
+data5 = 12.12345;
+data6 = 123.1234;
+data7 = 1234.123;
+data8 = 12345.12;
+
+
+data9 = "Youtube";
+data10 = "Google";
+data11 = "Subscriber";
+data12 = "Catur";
+
+Arduino_SoftSerial.print(data1);      Arduino_SoftSerial.print("A");
+Arduino_SoftSerial.print(data2);      Arduino_SoftSerial.print("B"); 
+Arduino_SoftSerial.print(data3);      Arduino_SoftSerial.print("C"); 
+Arduino_SoftSerial.print(data4);      Arduino_SoftSerial.print("D"); 
+Arduino_SoftSerial.print(data5, 5);   Arduino_SoftSerial.print("E"); 
+Arduino_SoftSerial.print(data6, 4);   Arduino_SoftSerial.print("F"); 
+Arduino_SoftSerial.print(data7, 3);   Arduino_SoftSerial.print("G"); 
+Arduino_SoftSerial.print(data8, 2);   Arduino_SoftSerial.print("H"); 
+Arduino_SoftSerial.print(data9);      Arduino_SoftSerial.print("I"); 
+Arduino_SoftSerial.print(data10);     Arduino_SoftSerial.print("J"); 
+Arduino_SoftSerial.print(data11);     Arduino_SoftSerial.print("K"); 
+Arduino_SoftSerial.print(data12);     Arduino_SoftSerial.print("L");  
+Arduino_SoftSerial.print("\n");
+
+delay(500);
+
+ }
